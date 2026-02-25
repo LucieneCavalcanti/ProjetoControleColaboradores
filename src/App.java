@@ -35,18 +35,30 @@ public class App {
 
             switch (opcao) {
                 case 1:
-                    ColaboradorEntity colaborador = new ColaboradorEntity();
-                    System.out.print("Digite o nome do colaborador: ");
-                    colaborador.setNome(ler.nextLine());
-                    colaboradores.add(colaborador);
-                    System.out.println("Colaborador cadastrado com sucesso!");
+                    if(status.isEmpty() || cargos.isEmpty()) {
+                        System.out.println("É necessário cadastrar pelo menos um cargo e um status antes de cadastrar um colaborador.");
+                        break;
+                    } else {
+                        ColaboradorEntity colaborador = new ColaboradorEntity();
+                        System.out.print("Digite o nome do colaborador: ");
+                        colaborador.setNome(ler.nextLine());
+                        //demais atributos do colaborador
+                        
+                        colaboradores.add(colaborador);
+                        System.out.println("Colaborador cadastrado com sucesso!");
+                    }
                     break;
                 case 2:
-                    ClienteEntity cliente = new ClienteEntity();
-                    System.out.print("Digite o nome do cliente: ");
-                    cliente.setNome(ler.nextLine());
-                    clientes.add(cliente);
-                    System.out.println("Cliente cadastrado com sucesso!");
+                    if(status.isEmpty()) {
+                        System.out.println("É necessário cadastrar pelo menos um status antes de cadastrar um cliente.");
+                        break;
+                    } else {
+                        ClienteEntity cliente = new ClienteEntity();
+                        System.out.print("Digite o nome do cliente: ");
+                        cliente.setNome(ler.nextLine());
+                        clientes.add(cliente);
+                        System.out.println("Cliente cadastrado com sucesso!");
+                    }
                     break;
                 case 3:
                     // Lógica para cadastrar cargo
