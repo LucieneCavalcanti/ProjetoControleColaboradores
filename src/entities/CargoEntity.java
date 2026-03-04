@@ -25,4 +25,7 @@ public class CargoEntity {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+    public String toString() {
+        return "[id=" + id + ", descricao=" + descricao + "]";
+    }
 }

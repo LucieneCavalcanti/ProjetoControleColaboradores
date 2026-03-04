@@ -50,4 +50,7 @@ public class UsuarioEntity {
     public void setStatus(StatusEntity status) {
         this.status = status;
     }
+    public String toString() {
+        return "[id=" + id + ", nome=" + nome+"]";
+    }
 }

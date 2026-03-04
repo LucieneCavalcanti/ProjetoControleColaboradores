@@ -16,6 +16,10 @@ public class App {
         ArrayList<CargoEntity> cargos = new ArrayList<CargoEntity>();     
         ArrayList<StatusEntity> status = new ArrayList<StatusEntity>();     
         ArrayList<OrcamentoEntity> orcamentos = new ArrayList<OrcamentoEntity>();
+        status.add(new StatusEntity(1, "Ativo"));
+        status.add(new StatusEntity(2, "Inativo"));
+        cargos.add(new CargoEntity(100, "Administrador"));
+        cargos.add(new CargoEntity(200, "RH"));
         do {
             System.out.println("Menu de Opções:");
             System.out.println("1. Colaborador");
@@ -52,26 +56,31 @@ public class App {
                         break;
                     } else {
                         ColaboradorEntity colaborador = new ColaboradorEntity();
-                        System.out.print("Digite o nome do colaborador: ");
-                        colaborador.setNome(ler.nextLine());
-                        System.out.println("--- Status cadastrados ---");
-                        for(StatusEntity s : status) {
-                            System.out.println(s);
-                        }
-                        System.out.print("Digite o status do colaborador: ");
-                        String nomeStatus = ler.nextLine();
+                        do{
+                            System.out.print("Digite o nome do colaborador: ");
+                            colaborador.setNome(ler.nextLine());
+                        }while(colaborador.getNome().trim().length()<6);
                         boolean statusEncontrado = false;
-                        for(StatusEntity s : status) {
-                            if(s.getDescricao().equals(nomeStatus)) {
-                                colaborador.setStatus(s);
-                                statusEncontrado = true;
-                                break;
+                        do{ // chave estrangeira de status na tabela usuario
+                            System.out.println("--- Status cadastrados ---");
+                            for(StatusEntity s : status) {
+                                System.out.println(s);
                             }
-                        }
-                        if(!statusEncontrado) {
-                            System.out.println("Status não encontrado. Colaborador não cadastrado.");
-                            break;
-                        }
+                            System.out.print("Digite o status do colaborador: ");
+                            String nomeStatus = ler.nextLine();
+                            statusEncontrado = false;
+                            for(StatusEntity s : status) {
+                                if(s.getDescricao().equals(nomeStatus)) {
+                                    colaborador.setStatus(s);
+                                    statusEncontrado = true;
+                                    break;
+                                }
+                            }
+                            if(!statusEncontrado) {
+                                System.out.println("Status não encontrado. Colaborador não cadastrado.");
+                                continue;
+                            }
+                        }while(!statusEncontrado);
                         System.out.println("Digite a senha:");
                         colaborador.setSenha(ler.next());
                         System.out.println("Digite o e-mail:");
@@ -82,7 +91,13 @@ public class App {
                         System.out.println("Colaborador cadastrado com sucesso!");
                     }
                     break;
-                case "12": //cliente - cadastrar
+                case "12":
+                    System.out.println("--- Colaboradores cadastrados ---");
+                    for(ColaboradorEntity c : colaboradores) {
+                        System.out.println(c);
+                    }
+                    break;
+                case "21": //cliente - cadastrar
                     if(status.isEmpty() || cargos.isEmpty()) {
                         System.out.println("É necessário cadastrar pelo menos um cargo e um status antes de cadastrar um colaborador.");
                         break;
@@ -120,7 +135,42 @@ public class App {
                         System.out.println("Cliente cadastrado com sucesso!");
                     }
                     break;
-                
+                case "22":
+                    System.out.println("--- Clientes cadastrados ---");
+                    for(ClienteEntity c : clientes) {
+                        System.out.println(c);
+                    }
+                    break;
+                case "41":
+                    System.out.println("Digite o id");
+                    StatusEntity statusEntity = new StatusEntity();
+                    statusEntity.setId(ler.nextInt());
+                    System.out.println("Digite a descrição");
+                    statusEntity.setDescricao(ler.next());
+                    status.add(statusEntity);
+                    System.out.println("Status cadastrado com sucesso!");
+                    break;
+                case "42":
+                    System.out.println("--- Status cadastrados ---");
+                    for(StatusEntity s : status) {
+                        System.out.println(s);
+                    }
+                    break;
+                case "31":
+                    System.out.println("Digite o id");
+                    CargoEntity cargoEntity = new CargoEntity();
+                    cargoEntity.setId(ler.nextInt());
+                    System.out.println("Digite a descrição");
+                    cargoEntity.setDescricao(ler.next());
+                    cargos.add(cargoEntity);
+                    System.out.println("Cargo cadastrado com sucesso!");
+                    break;
+                case "32":
+                    System.out.println("--- Cargos cadastrados ---");
+                    for(CargoEntity c : cargos) {
+                        System.out.println(c);
+                    }
+                    break;
                 case "0":
                     System.out.println("Saindo do programa...");
                     break;
