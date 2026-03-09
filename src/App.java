@@ -6,6 +6,7 @@ import entities.ClienteEntity;
 import entities.ColaboradorEntity;
 import entities.OrcamentoEntity;
 import entities.StatusEntity;
+import repository.StatusRepository;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -147,8 +148,13 @@ public class App {
                     statusEntity.setId(ler.nextInt());
                     System.out.println("Digite a descrição");
                     statusEntity.setDescricao(ler.next());
-                    status.add(statusEntity);
-                    System.out.println("Status cadastrado com sucesso!");
+                    StatusRepository statusRepo = new StatusRepository();
+                    if(statusRepo.inserir(statusEntity))
+                        System.out.println("Status inserido com sucesso!");
+                    else
+                        System.out.println("Falha ao inserir status.");
+                    //status.add(statusEntity);
+                    //System.out.println("Status cadastrado com sucesso!");
                     break;
                 case "42":
                     System.out.println("--- Status cadastrados ---");
