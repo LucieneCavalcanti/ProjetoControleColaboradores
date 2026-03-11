@@ -17,6 +17,7 @@ public class App {
         ArrayList<CargoEntity> cargos = new ArrayList<CargoEntity>();     
         ArrayList<StatusEntity> status = new ArrayList<StatusEntity>();     
         ArrayList<OrcamentoEntity> orcamentos = new ArrayList<OrcamentoEntity>();
+        StatusRepository statusRepo = new StatusRepository();
         status.add(new StatusEntity(1, "Ativo"));
         status.add(new StatusEntity(2, "Inativo"));
         cargos.add(new CargoEntity(100, "Administrador"));
@@ -148,7 +149,7 @@ public class App {
                     statusEntity.setId(ler.nextInt());
                     System.out.println("Digite a descrição");
                     statusEntity.setDescricao(ler.next());
-                    StatusRepository statusRepo = new StatusRepository();
+                    
                     if(statusRepo.inserir(statusEntity))
                         System.out.println("Status inserido com sucesso!");
                     else
@@ -157,6 +158,7 @@ public class App {
                     //System.out.println("Status cadastrado com sucesso!");
                     break;
                 case "42":
+                    status = statusRepo.listar();
                     System.out.println("--- Status cadastrados ---");
                     for(StatusEntity s : status) {
                         System.out.println(s);

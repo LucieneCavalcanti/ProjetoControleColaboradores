@@ -17,9 +17,35 @@ public class StatusRepository extends Conexao {
         stmt.setString(1, status.getDescricao());
         return stmt.executeUpdate() > 0;
     }
+    public boolean excluir(int id) throws Exception {
+        String sql = "DELETE FROM tbstatus WHERE id = ?";
+        PreparedStatement stmt = getConexao().
+        prepareStatement(sql);
+        stmt.setInt(1, id);
+        return stmt.executeUpdate() > 0;
+    }
+    public boolean editar(StatusEntity status) throws Exception {
+        String sql = "UPDATE tbstatus SET descricao = ? WHERE id = ?";
+        PreparedStatement stmt = getConexao().
+        prepareStatement(sql);
+        stmt.setString(1, status.getDescricao());
+        stmt.setInt(2, status.getId());
+        return stmt.executeUpdate() > 0;
+    }
     public ArrayList<StatusEntity> listar() throws Exception {
         String sql = "SELECT * FROM tbstatus order by descricao";
         PreparedStatement stmt = getConexao().prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        ArrayList<StatusEntity> statusList = new ArrayList<>();
+        while (rs.next()) 
+            statusList.add(new StatusEntity(
+                rs.getInt("id"), rs.getString("descricao")));
+        return statusList;
+    }
+    public ArrayList<StatusEntity> pesquisar(String pesquisa) throws Exception {
+        String sql = "SELECT * FROM tbstatus WHERE descricao LIKE ? order by descricao";
+        PreparedStatement stmt = getConexao().prepareStatement(sql);
+        stmt.setString(1, "%" + pesquisa + "%");
         ResultSet rs = stmt.executeQuery();
         ArrayList<StatusEntity> statusList = new ArrayList<>();
         while (rs.next()) 
